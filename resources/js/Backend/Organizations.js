@@ -2,13 +2,17 @@ import { Response } from '@inertiajs/inertia-interceptor'
 import { default as authenticatedSharedState } from './shared/auth'
 
 export default {
-  get: () => {
+  get: event => {
     Response.share(authenticatedSharedState)
+
+    const params = new URL(event.detail.url.toString()).searchParams
+    const search = params.get('search') || null
+    const trashed = params.get('trashed') || null
 
     return Response.render('Organizations/Index', {
       filters: {
-        search: null,
-        trashed: null,
+        search,
+        trashed,
       },
       'organizations':{
         'data':[
@@ -82,7 +86,15 @@ export default {
             'city':'Kyleighfort',
             'deleted_at':null,
           },
-        ],
+        ].filter(item => {
+          return !search || item.name.toLowerCase().indexOf(search.toLowerCase()) > -1
+        }).filter(item => {
+          if (trashed && trashed === 'only') {
+            return item.deleted_at !== null
+          }
+
+          return true
+        }),
         'links':[
           {
             'url':null,
