@@ -8,8 +8,6 @@ export default {
       return Response.redirect('/login')
     }
 
-    Response.share(Session)
-
     if (params.get('remember') === 'forget') {
       return Response.redirect(route)
     }
