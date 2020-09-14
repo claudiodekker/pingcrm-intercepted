@@ -2,8 +2,12 @@ import { Response } from '@inertiajs/inertia-interceptor'
 import { default as authenticatedSharedState } from './shared/auth'
 
 export default {
-  get: ({ params }) => {
+  get: ({ params, route }) => {
     Response.share(authenticatedSharedState)
+
+    if (params.get('remember') === 'forget') {
+      return Response.redirect(route)
+    }
 
     const search = params.get('search')
     const trashed = params.get('trashed')
