@@ -15,7 +15,7 @@ Vue.use(VueMeta)
 let app = document.getElementById('app')
 
 Response.share(guestSharedState)
-Interceptor.setup(app, '/login', Routes)
+Interceptor.setup(app, Routes)
 
 new Vue({
   metaInfo: {

@@ -2,12 +2,11 @@ import { Response } from '@inertiajs/inertia-interceptor'
 import { default as authenticatedSharedState } from './shared/auth'
 
 export default {
-  get: event => {
+  get: ({ params }) => {
     Response.share(authenticatedSharedState)
 
-    const params = new URL(event.detail.url.toString()).searchParams
-    const search = params.get('search') || null
-    const trashed = params.get('trashed') || null
+    const search = params.get('search')
+    const trashed = params.get('trashed')
 
     return Response.render('Organizations/Index', {
       filters: {
