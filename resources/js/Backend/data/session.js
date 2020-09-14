@@ -1,4 +1,4 @@
-export default {
+export const Session = {
   auth: {
     user: null,
   },

@@ -1,10 +1,14 @@
 import { Response } from '@inertiajs/inertia-interceptor'
-import { default as authenticatedSharedState } from './shared/auth'
-import { default as organizations } from './data/organizations'
+import { organizations } from './data/organizations'
+import { Session } from './data/session'
 
 export default {
   get: ({ params, route }) => {
-    Response.share(authenticatedSharedState)
+    if (Session.auth.user === null) {
+      return Response.redirect('/login')
+    }
+
+    Response.share(Session)
 
     if (params.get('remember') === 'forget') {
       return Response.redirect(route)

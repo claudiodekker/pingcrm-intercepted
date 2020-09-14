@@ -4,7 +4,7 @@ import PortalVue from 'portal-vue'
 import { InertiaApp } from '@inertiajs/inertia-vue'
 import { Interceptor, Response } from '@inertiajs/inertia-interceptor'
 import { default as Routes } from './Backend'
-import { default as guestSharedState } from './Backend/shared/guest'
+import { Session } from './Backend/data/session'
 
 Vue.config.productionTip = false
 Vue.mixin({ methods: { route: window.route } })
@@ -14,7 +14,7 @@ Vue.use(VueMeta)
 
 let app = document.getElementById('app')
 
-Response.share(guestSharedState)
+Response.share(Session)
 Interceptor.setup(app, Routes)
 
 new Vue({

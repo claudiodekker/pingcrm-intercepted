@@ -1,4 +1,4 @@
-export default {
+export const organizations = {
   data: [
     {
       'id':47,
